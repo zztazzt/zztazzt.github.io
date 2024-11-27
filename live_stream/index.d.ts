@@ -1,3 +1,5 @@
+import { ZegoUIKitCreateConfig } from "../src/sdk/model";
+
 declare type ZegoCloudRTCCore = {};
 declare type ZegoExpressEngine = {};
 declare interface ZegoUser {
@@ -209,6 +211,13 @@ declare interface ZegoCloudRoomConfig {
 	showWaitingCallAcceptAudioVideoView?: boolean;
 	// Configure the call invitation list during a call
 	callingInvitationListConfig?: CallingInvitationListConfig;
+	// 2.13.1
+	// Overall video screen configuration
+	videoScreenConfig?: {
+		objectFit?: "cover" | "contain" | "fill" // 视频画面显示模式，默认 "contain"
+	}
+	// Send Message Response
+	onSendMessageResult?: (response: { errCode: number, message: string, timestamp?: string }) => void
 }
 
 export enum RightPanelExpandedType {
@@ -364,7 +373,7 @@ export declare class ZegoUIKitPrebuilt {
 		userID: string,
 		userName?: string
 	): string;
-	static create(kitToken: string, cloudProxyConfig?: { proxyList: { hostName: string, port?: number }[] }): ZegoUIKitPrebuilt;
+	static create(kitToken: string, createConfig?: ZegoUIKitCreateConfig): ZegoUIKitPrebuilt;
 	addPlugins(plugins?: { ZegoSuperBoardManager?: any; ZIM?: any }): void;
 	joinRoom(roomConfig?: ZegoCloudRoomConfig): void;
 	destroy(): void;
