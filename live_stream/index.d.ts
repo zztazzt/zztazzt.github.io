@@ -218,6 +218,21 @@ declare interface ZegoCloudRoomConfig {
 	}
 	// Send Message Response
 	onSendMessageResult?: (response: { errCode: number, message: string, timestamp?: string }) => void
+	// Screen rotation Button
+	showRotatingScreenButton?: boolean;
+	// Screen rotation notification
+	onScreenRotation?: () => void
+	// User status updated
+	onUserStateUpdated?: (status: ZegoUserState) => void
+	// Member view config
+	memberViewConfig?: {
+		operationListCustomButton?: () => Element
+	}
+}
+
+export enum ZegoUserState {
+	Normal = "Normal",
+	Banned = "Banned"
 }
 
 export enum RightPanelExpandedType {
@@ -397,4 +412,7 @@ export declare class ZegoUIKitPrebuilt {
 	getRoomID(): string;
 	// 2.11.0
 	updateCallingInvitationListConfig(config: CallingInvitationListConfig): void
+	// 2.13.0
+	rotateToLandscape(): void
+	rotateToPortrait(): void
 }
