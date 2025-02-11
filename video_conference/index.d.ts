@@ -1,4 +1,3 @@
-import { ZegoUIKitCreateConfig } from "../src/sdk/model";
 
 declare type ZegoCloudRTCCore = {};
 declare type ZegoExpressEngine = {};
@@ -323,6 +322,8 @@ declare interface ZegoCallInvitationConfig {
 	// Whether the whole call should end when the call originator leaves the call (causing other participants to leave together), The default value is false.
 	// If it is set to false, the call can continue even if the initiator leaves.
 	endCallWhenInitiatorLeave?: boolean;
+	// onTokenWillExpire 还未进房前需要监听
+	onTokenWillExpire?: () => void
 }
 
 declare interface ZegoSignalingPluginNotificationConfig {
@@ -347,9 +348,19 @@ declare enum MessagePriority {
 	High = 3,
 }
 
-export enum ZegoUIKitLanguage {
+declare enum ZegoUIKitLanguage {
 	CHS = "zh-CN", // 中文
 	ENGLISH = "en-US", // 英文
+}
+
+declare interface ZegoUIKitCreateConfig {
+	cloudProxyConfig?: { proxyList: { hostName: string, port?: number }[] },
+	AiDenoiseConfig?: { mode: AiDenoiseMode }
+}
+
+declare enum AiDenoiseMode {
+	AI = 0,
+	AIBalanced = 1
 }
 export declare class ZegoUIKitPrebuilt {
 	static core: ZegoCloudRTCCore | undefined;
@@ -418,4 +429,5 @@ export declare class ZegoUIKitPrebuilt {
 	// 2.13.0
 	rotateToLandscape(): void
 	rotateToPortrait(): void
+	renewToken(): boolean
 }
